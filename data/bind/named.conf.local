@@ -1,0 +1,4 @@
+zone "omniware.it" {
+    type master;
+    file "/etc/bind/zones/masters/db.omniware.it";
+};

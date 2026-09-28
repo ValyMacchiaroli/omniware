@@ -1,0 +1,13 @@
+$TTL 2d 
+@         IN      SOA   ns1.omniware.it. hostmaster.omniware.it. (
+                                2003080800 ; serial number
+                                12h        ; refresh
+                                15m        ; update retry
+                                4d         ; expiry
+                                2h         ; minimum
+                                )
+; name server RR for the domain
+           IN      NS      ns1.omniware.it.
+; name servers
+ns1        IN      A       10.10.13.27
+www        IN      A       10.10.13.27

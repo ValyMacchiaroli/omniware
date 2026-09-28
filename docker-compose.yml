@@ -1,0 +1,73 @@
+networks:
+  nginx-proxy:
+    external: true
+
+services:
+  apache2:
+    build: .
+    container_name: apache2
+    environment:
+      - VIRTUAL_HOST=www.omniware.it
+      - VIRTUAL_PORT=80
+    volumes:
+      - "./data/site:/var/www/html:ro"
+    tty: true
+    command: /usr/sbin/apache2ctl -D FOREGROUND
+    networks:
+      - nginx-proxy
+
+  apache2-backup:
+    build: .
+    container_name: apache2-backup
+    environment:
+      - VIRTUAL_HOST=www.omniware.it
+      - VIRTUAL_PORT=80
+    volumes:
+      - "./data/site:/var/www/html:ro"
+    tty: true
+    command: /usr/sbin/apache2ctl -D FOREGROUND
+    networks:
+      - nginx-proxy
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:1.11
+    container_name: proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./data/nginx/conf:/etc/nginx/conf.d
+      - ./data/nginx/vhost:/etc/nginx/vhost.d
+      - ./data/nginx/certs:/etc/nginx/certs
+      - ./data/nginx/dhparam:/etc/nginx/dhparam
+      - ./data/nginx/html:/usr/share/nginx/html
+      - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - nginx-proxy
+
+  dns:
+    build: ./dns
+    container_name: dns
+    ports:
+      - "10.10.13.27:53:53/tcp"
+      - "10.10.13.27:53:53/udp"
+    volumes:
+      - ./data/bind/named.conf.local:/etc/bind/named.conf.local
+      - ./data/bind/named.conf.options:/etc/bind/named.conf.options
+      - ./data/bind/zones/masters/db.omniware.it:/etc/bind/zones/masters/db.omniware.it
+    networks:
+      - nginx-proxy
+    restart: always
+
+  database:
+    image: mariadb:11.4
+    container_name: db
+    environment:
+      - MARIADB_ROOT_PASSWORD=Maria
+      - MARIADB_DATABASE=catalogo
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    networks:
+      - nginx-proxy
+    restart: always

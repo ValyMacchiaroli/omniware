@@ -1,0 +1,15 @@
+acl "trusted" {
+    10.10.12.0/22;
+};
+
+options {
+    directory "/var/cache/bind";
+
+    recursion yes;
+    allow-recursion { trusted; };
+
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+};
