@@ -22,12 +22,10 @@ services:
     build: .
     container_name: apache2-backup
     environment:
-      - VIRTUAL_HOST=host2.omniware.it
+      - VIRTUAL_HOST=host1.omniware.it
       - VIRTUAL_PORT=80
-    ports:
-      - 8080:80
     volumes:
-      - "./data/site:/var/www/html:ro"
+      - "./data/site2:/var/www/html:ro"
     tty: true
     command: /usr/sbin/apache2ctl -D FOREGROUND
     networks:
@@ -48,6 +46,9 @@ services:
       - ./data/nginx/dhparam:/etc/nginx/dhparam
       - ./data/site:/usr/share/nginx/html
       - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - apache2
+      - apache2-backup
     networks:
       - nginx-proxy
 

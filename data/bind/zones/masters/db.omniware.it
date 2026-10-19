@@ -11,5 +11,3 @@ $TTL 2d
 ; name servers
 ns1          IN      A       10.10.14.79
 host1        IN      A       10.10.14.79
-host2        IN      A       10.10.14.79
-ng           IN      A       10.10.14.79
