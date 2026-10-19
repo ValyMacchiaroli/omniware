@@ -147,7 +147,7 @@
 <p class="text-muted">Nessun prodotto trovato nel database. Esegui lo script di popolamento per aggiungere articoli.</p>
 </div>
 <?php else: ?>
-<?php for ($i=0;$i<3;$i++): ?>
+<?php for ($i=0;$i<6;$i++): ?>
 <div class="col-md-4">
 <div class="card product-card p-3 h-100">
 <div class="mb-2">
