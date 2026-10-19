@@ -9,5 +9,6 @@ $TTL 2d
 ; name server RR for the domain
            IN      NS      ns1.omniware.it.
 ; name servers
-ns1        IN      A       10.10.13.27
-www        IN      A       10.10.13.27
+ns1          IN      A       10.10.14.79
+host1        IN      A       10.10.14.79
+host2        IN      A       10.10.14.79

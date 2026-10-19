@@ -5,7 +5,7 @@ acl "trusted" {
 options {
     directory "/var/cache/bind";
 
-    recursion yes;
+    recursion no;
     allow-recursion { trusted; };
 
     forwarders {
